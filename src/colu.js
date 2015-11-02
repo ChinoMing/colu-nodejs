@@ -25,8 +25,12 @@ var Colu = function (settings) {
   if (self.coluHost === mainnetColuHost) {
     if (!settings.apiKey) throw new Error('Must have apiKey and/or set network to testnet')
   }
-  self.redisPort = settings.redisPort || 6379
-  self.redisHost = settings.redisHost || '127.0.0.1'
+  if (settings.redisPort != ""){
+    self.redisPort = settings.redisPort || 6379
+    self.redisHost = settings.redisHost || '127.0.0.1'
+  } else {
+    self.redisUrl = settings.redisUrl || 'redis://user:pass@host:port';
+  }
   self.hdwallet = new HDWallet(settings)
   self.coloredCoins = new ColoredCoins(settings)
   self.network = self.hdwallet.network
